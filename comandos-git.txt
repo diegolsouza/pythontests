@@ -17,24 +17,24 @@ to set your account's default identity.
 Omit --global to set the identity only in this repository.
 
 fatal: unable to auto-detect email address (got 'root@chuleta.(none)')
-root@chuleta:/home/souza/python# git config --global user.email "diego@diegosouz                                                                   a.com.br"
-root@chuleta:/home/souza/python# git config --global user.name "Diego Souza"
+root@chuleta:/home/souza/python# git config --global user.email ""
+root@chuleta:/home/souza/python# git config --global user.name ""
 root@chuleta:/home/souza/python# git commit -m "first commit"                                                                                      [master (root-commit) 9408db3] first commit
  1 file changed, 1 insertion(+)
  create mode 100644 README.md
-root@chuleta:/home/souza/python# git remote add origin https://github.com/diegol                                                                   souza/pythontests.git
+root@chuleta:/home/souza/python# git remote add origin https://github.com//pythontests.git
 root@chuleta:/home/souza/python# git push -u origin master
-Username for 'https://github.com': diegolsouza
-Password for 'https://diegolsouza@github.com':
+Username for 'https://github.com':
+Password for 'https://@github.com':
 Counting objects: 3, done.
 Compressing objects: 100% (2/2), done.
 Writing objects: 100% (3/3), 283 bytes | 283.00 KiB/s, done.
 Total 3 (delta 0), reused 0 (delta 0)
 remote:
 remote: Create a pull request for 'master' on GitHub by visiting:
-remote:      https://github.com/diegolsouza/pythontests/pull/new/master
+remote:      https://github.com//pythontests/pull/new/master
 remote:
-To https://github.com/diegolsouza/pythontests.git
+To https://github.com//pythontests.git
  * [new branch]      master -> master
 Branch 'master' set up to track remote branch 'master' from 'origin'.
 root@chuleta:/home/souza/python# man git
@@ -50,8 +50,8 @@ dicionarios.py             lista.py                   string-verificar-letra.py
 lista-ordenar.py           string-primeiro-nome.py    teste1.py
 root@chuleta:/home/souza/python# git add ./testes/*
 root@chuleta:/home/souza/python# git push -u origin master
-Username for 'https://github.com': diegolsouza
-Password for 'https://diegolsouza@github.com':
+Username for 'https://github.com':
+Password for 'https://@github.com':
 Branch 'master' set up to track remote branch 'master' from 'origin'.
 Everything up-to-date
 root@chuleta:/home/souza/python# git status
@@ -84,13 +84,13 @@ Your branch is ahead of 'origin/master' by 1 commit.
 
 nothing to commit, working tree clean
 root@chuleta:/home/souza/python# git push -u origin master
-Username for 'https://github.com': diegolsouza
-Password for 'https://diegolsouza@github.com':
+Username for 'https://github.com': 
+Password for 'https://@github.com':
 Counting objects: 9, done.
 Compressing objects: 100% (8/8), done.
 Writing objects: 100% (9/9), 1.18 KiB | 1.18 MiB/s, done.
 Total 9 (delta 0), reused 0 (delta 0)
-To https://github.com/diegolsouza/pythontests.git
+To https://github.com//pythontests.git
    9408db3..c903dc4  master -> master
 Branch 'master' set up to track remote branch 'master' from 'origin'.
 root@chuleta:/home/souza/python#
