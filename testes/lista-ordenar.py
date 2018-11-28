@@ -1,0 +1,10 @@
+lista=[9,1926,1393,469,23994,69394,692394,69,3469,34]
+print("Ordenar a lista")
+lista.sort()
+print(lista)
+print("Inverter a lista")
+lista.reverse()
+print(lista)
+print("Inverte de novo")
+lista.reverse()
+print(lista)
