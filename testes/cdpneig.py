@@ -4,6 +4,7 @@ from getpass import getpass
 from sys import exit, argv
 #import paramiko
 import netmiko
+import pprint
 import json
 import signal
 
@@ -12,17 +13,13 @@ signal.signal(signal.SIGINT.signal.SIG_DFL)
 
 
 # Controle de argumentos
-if len(argv) < 3:
+if len(argv) < 2:
     print("Faltam argumentos.\nUtilizar: cmdrunner.py <arquivo TXT com comandos> <arquivo JSON com devices>")
     exit()
 
-# Abre o arquivo contendo os comandos
+# Abre o arquivo contendo os IPs
 with open(argv[1]) as cmd_file:
     commands = cmd_file.readlines()
-
-# Abre o arquivo contendo os IPs dos devices
-with open(argv[2]) as dev_file:
-    devices = json.load(dev_file)
 
 # Função para pedir senha
 def get_password():
@@ -34,6 +31,27 @@ def get_password():
             print("Senha nao confere. Tente novamente.")
             password = None
     return password
+
+# Funcao para pegar as configs via cdp
+def get_cfg_cdp(input_string):
+    lines = input_string.splitlines()[5:]
+    hostname = None
+    config = []
+    for line in lines:
+        words = line.split()
+        if len(words) == 1:
+            hostname = words[0].split(".")[0]
+        else
+            if hostname is None:
+                hostname = words.pop(0).split(".")[0]
+            local = "".join(words[0:2])
+            remote = "".join(words[-2:])
+            description = "_".join((hostname, remote))
+            config.append("interface " + local)
+            config.append(" description " + description)
+            config.append("!")
+            hostname = None
+
 
 # Requisição de credenciais
 username = input("Usuario: ")
@@ -52,13 +70,33 @@ for device in devices:
         print("-"*79)
         print("Conectando no", device['ip'],"\n")
         connection = netmiko.ConnectHandler(**device)
-        filename = connection.base_prompt + ".txt"
-        with open(filename, "w") as out_file:
-        for command in commands:
-            # Executa os comandos cisco_ios
-            out_file.write("Output do comando " + command + "\n\n")
-            out_file.write(connection.send_command(command) + "\n\n")
-        # Fecha a conexão e aguarda input pra fechar programa
+        output = connection.send_command("show cdp neighbors")
+        lines = output.splitlines()[5:]
+        hostname = None
+        config = []
+        for line in lines:
+            words = line.split()
+            if len(words) == 1:
+                hostname = words[0].split(".")[0]
+            elif hostname is None:
+                hostname = words[0].split(".")[0]
+                local = "".join(words[1:3])
+                remote = "".join(words[-2:])
+                description = "_".join((hostname, remote))
+                config.append("interface " + local)
+                config.append(" description " + description)
+                config.append("!")
+                hostname = None
+            else
+                local = "".join(words[0:2])
+                remote = "".join(words[-2:])
+                description = "_".join((hostname, remote))
+                config.append("interface " + local)
+                config.append(" description " + description)
+                config.append("!")
+                hostname = None
+        print("\n".join(config))
+
         connection.disconnect()
 
     # Tratamento de erros
