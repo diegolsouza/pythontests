@@ -1,11 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #from __future__ import absolute_import, division, print_function
 from getpass import getpass
 from sys import exit, argv
-import paramiko
+#import paramiko
 import netmiko
 import json
+import signal
 
+signal.signal(signal.SIGPIPE.signal.SIG_DFL)
+signal.signal(signal.SIGINT.signal.SIG_DFL)
+
+
+# Controle de argumentos
 if len(argv) < 3:
     print("Faltam argumentos.\nUtilizar: cmdrunner.py <arquivo TXT com comandos> <arquivo JSON com devices>")
     exit()
@@ -25,12 +31,12 @@ def get_password():
         password = getpass(prompt="Senha: ")
         password_verify = getpass(prompt="Digite a senha novamente: ")
         if password != password_verify:
-            print("Senha não confere. Tente novamente.")
+            print("Senha nao confere. Tente novamente.")
             password = None
     return password
 
 # Requisição de credenciais
-username = input("Usuário: ")
+username = input("Usuario: ")
 password = get_password()
 
 # Tratamento de erros
@@ -57,7 +63,7 @@ for device in devices:
         print("Falhou para", device['ip'], e)
 
     except KeyboardInterrupt:
-        print("Você pressionou Ctrl+C")
+        print("Voce pressionou Ctrl+C")
         sys.exit()
 
 # Aguarda para fechar
